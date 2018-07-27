@@ -52,7 +52,8 @@ def get_failed_traffic():
     c = db.cursor()
     c.execute("""SELECT agg.*
     FROM(
-            SELECT date, ((CAST(error AS float) / CAST(success AS float)) *100)
+            SELECT date, ((CAST(error AS float) /
+            CAST(success + error AS float)) *100)
             AS error_percentage FROM daily_report
             ORDER BY error_percentage DESC
         ) agg
